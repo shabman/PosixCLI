@@ -22,6 +22,14 @@
 
 POSIX_BEGIN_DECLS
 
+/**
+ * @brief Runs a new (child) process in the process address space.
+ * The PosixCLI program will become the parent process and can be accessed
+ * via getppid(). Execution will fail depending on certain scenarios such as
+ * an invalid binary file path
+ * 
+ * @return true if executed, otherwise false
+ */
 int pcli_run_proc ( const char* );
 
 POSIX_END_DECLS
