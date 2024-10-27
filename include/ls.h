@@ -22,6 +22,11 @@
 
 POSIX_BEGIN_DECLS
 
+/**
+ * @brief Lists the contents available in the CWD (current working directory)
+ *
+ * @return true if executed successfully, otherwise false (unlikely)
+ */
 int pcli_ls ( void );
 
 POSIX_END_DECLS
