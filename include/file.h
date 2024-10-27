@@ -30,6 +30,12 @@ POSIX_BEGIN_DECLS
  */
 int pcli_dir_exists ( const char* );
 
+/**
+ * @brief Checks if the given file path exists
+ * 
+ * @param path - the path to check
+ * @return true if present, otherwise false
+ */
 int pcli_file_exists ( const char* );
 
 POSIX_END_DECLS
