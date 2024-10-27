@@ -2,8 +2,6 @@
 
 - A simple, rewritten version of the CLI for Unix Systems.
 
-- For COMP3370
-
 ## Commands:
 
 - exit
@@ -25,4 +23,4 @@ Started: 26/10/24
 <br/>
 Completed: 27/10/24
 
-Copyright (c) Mustafa Malik (mm2440@kent.ac.uk). See LICENSE for more.
+Copyright (c) Mustafa Malik. See LICENSE for more.
