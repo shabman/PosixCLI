@@ -36,6 +36,7 @@ parse_cmd ( void )
 
   if ( streq ( buf, "exit" ) )
     {
+      free ( cmd_copy );
       printf ( "%s\n", "Terminating session..." );
       return;
     }
