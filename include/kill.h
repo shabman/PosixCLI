@@ -27,6 +27,14 @@
 
 POSIX_BEGIN_DECLS
 
+/**
+ * @brief Kills a given process ID. Note if the PID is 0, -1 or the same
+ * as the CLI, it will be ignored as a precaution. Using PID 0, -1 will
+ * send a signal to all processes which can be unsafe if not used correctly.
+ * This does not include system processes so it does not risk anything serious
+ * 
+ * @return true if terminated, otherwise false
+ */
 int pcli_kill_pid ( const char* );
 
 POSIX_END_DECLS
