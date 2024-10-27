@@ -32,7 +32,7 @@ int pcli_dir_exists ( const char* );
 
 /**
  * @brief Checks if the given file path exists
- * 
+ *
  * @param path - the path to check
  * @return true if present, otherwise false
  */
