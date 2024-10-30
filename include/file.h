@@ -38,6 +38,16 @@ int pcli_dir_exists ( const char* );
  */
 int pcli_file_exists ( const char* );
 
+/**
+ * @brief Gets the parent working directory of the current directory
+ *
+ * @param array - The array buffer to store the path in
+ * @param size - The size of the array buffer
+ * @param path - The current working directory path
+ * @return The new path, the parent working directory
+ */
+char* pcli_get_pwd ( char*, size_t, const char* );
+
 POSIX_END_DECLS
 
 #endif /* __POSIX_CLI_FILE_H__ */
