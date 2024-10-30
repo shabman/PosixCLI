@@ -20,15 +20,61 @@
 #include "file.h"
 #include "strutil.h"
 
+#include <ctype.h>
+
 static char _path_buf[ PATH_MAX ];
 static char _cur_path[ PATH_MAX ];
 
-// TODO: Abstract out
 static void
 __set_buffer ( const char* source, char* buffer )
 {
   memset ( buffer, 0, sizeof ( &buffer ) );
   strcpy ( buffer, source );
+}
+
+static int
+__cd_dir_matcher ( const char* source, int max_period )
+{
+  const char* copy = source;
+  unsigned int matches = 0;
+
+  copy += 2;
+  if ( isalnum ( *copy ) )
+    return 0;
+  copy++;
+
+  do
+    {
+      if ( isalnum ( *copy ) )
+        return 0;
+      if ( *copy == '.' )
+        matches++;
+      copy++;
+    }
+  while ( *copy != '\0' );
+
+  copy++;
+
+  while ( *copy != '\0' )
+    {
+      if ( *copy != '\n' || *copy != ' ' || *copy == '\t' )
+        return 0;
+      copy++;
+    }
+
+  return matches == max_period;
+}
+
+static int
+__is_current_dir ( const char* source )
+{
+  return __cd_dir_matcher ( source, 1 );
+}
+
+static int
+__is_escape_dir ( const char* source )
+{
+  return __cd_dir_matcher ( source, 2 );
 }
 
 void
@@ -57,10 +103,29 @@ pcli_current_path ( void )
 int
 pcli_cd ( const char* path )
 {
+  /* Check for bad arguments */
+  if ( strlen ( path ) == 3 && *( path + 3 ) != ' ' )
+    return PCD_NOTADIR;
+
   /* No arguments */
   if ( streq ( path, "cd" ) )
     {
       pcli_init_cd ();
+      printf ( "%s:\n", _cur_path );
+      return PCD_EXECOK;
+    }
+  else if ( __is_current_dir ( path ) )
+    {
+      printf ( "%s:\n", pcli_current_path () );
+      return PCD_EXECOK;
+    }
+  else if ( __is_escape_dir ( path ) )
+    {
+      size_t _len = sizeof ( char* ) * ( strlen ( pcli_current_path () ) );
+      char _tmp[ _len ];
+
+      __set_buffer ( pcli_get_pwd ( _tmp, _len, pcli_current_path () ), _cur_path );
+
       printf ( "%s:\n", _cur_path );
       return PCD_EXECOK;
     }
