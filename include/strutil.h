@@ -33,6 +33,10 @@ strremove ( char*, const char* );
 /* https://stackoverflow.com/questions/122616/how-do-i-trim-leading-trailing-whitespace-in-a-standard-way */
 char* strtrim ( char* );
 
+/* Strips trailing whitespaces (inspired by the Linux Kernel approach) */
+/* NOTE: Not in use */
+char* strstrip ( char* );
+
 POSIX_END_DECLS
 
 #endif /* __POSIX_CLI_STRUTIL_H__ */
