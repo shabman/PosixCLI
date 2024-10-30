@@ -16,8 +16,11 @@
  */
 
 #include "file.h"
+#include "strutil.h"
 #include <dirent.h>
 #include <errno.h>
+#include <libgen.h>
+#include <stdlib.h>
 
 int
 pcli_dir_exists ( const char* path )
@@ -36,4 +39,22 @@ int
 pcli_file_exists ( const char* path )
 {
   return access ( path, F_OK ) == 0;
+}
+
+char*
+pcli_get_pwd ( char* arr, size_t len, const char* cwd )
+{
+  memset ( arr, 0, len );
+  strcat ( arr, ".." );
+  strcat ( arr, cwd );
+  arr[ len ] = '\0';
+
+  char* pwd = dirname ( arr );
+  strremove ( pwd, ".." );
+
+  memset ( arr, 0, len );
+  strcpy ( arr, pwd );
+  arr[ strlen ( pwd ) + 1 ] = '\0';
+
+  return arr;
 }
