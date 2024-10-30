@@ -21,37 +21,24 @@
 int
 pcli_run_proc ( const char* bin )
 {
-
-  if ( *bin == '\0' || *bin == ' ' )
-    {
-      return 1;
-    }
-
-  char abs_path[ PATH_MAX ];
-  memset ( abs_path, 0, sizeof ( abs_path ) );
-
-  strcat ( abs_path, "/usr/local/bin/" );
-  strcat ( abs_path, bin );
-
-  if ( !pcli_file_exists ( abs_path ) )
-    {
-      return -1;
-    }
+  if ( *bin == ' ' || *bin == '\0' )
+    return 1;
 
   pid_t pid = fork ();
   if ( pid < 0 )
-    {
-      printf ( "%s\n", "Failed to spawn child process." );
-      return -1;
-    }
+    return 0;
 
   if ( pid == 0 )
     {
-      int status = execvp ( abs_path, NULL );
-      if ( status == -1 )
-        {
-          printf ( "%s\n", "Child process did not terminate normally." );
-        }
+      char* const argv[] = { ( char* )bin, NULL };
+      execvp ( bin, argv );
+
+      return 0;
+    }
+  else
+    {
+      int status;
+      waitpid ( pid, &status, WUNTRACED );
     }
 
   return 1;
