@@ -1,0 +1,17 @@
+Known Bugs:
+
+cd: (FIXED)
+    Escaping out of CWD does not work (cd ..) (FIXED)
+
+binary execution: (FIXED)
+    Starting custom binary processes do not work (sometimes they work) (FIXED)
+    Relook into execvp (FIXED)
+
+signals: (FIXED)
+    SIGINT will kill the CLI. Don't let that happen when it runs processes (FIXED)
+    Don't let it happen when in CLI mode (FIXED)
+
+To Consider:
+
+- Keep track of running child processes (TODO)
+- Unless the process is supposed to run in the background, wait for the spawned process ends before resuming (DONE)
